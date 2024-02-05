@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.logging.Logger;
+
 @RestController
 public class PaymentController {
+
+    Logger logger = Logger.getLogger(PaymentController.class.getName());
 
     private final PaymentProxy paymentProxy;
 
@@ -17,6 +21,11 @@ public class PaymentController {
 
     @PostMapping("/payment")
     public Payment createPayment(@RequestBody Payment payment) {
-        return paymentProxy.createPayment(payment);
+
+        Payment response = paymentProxy.createPayment(payment);
+
+        logger.info("Send response with ID " + response.getId());
+
+        return response;
     }
 }
